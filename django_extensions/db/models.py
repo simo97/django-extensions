@@ -132,3 +132,17 @@ class ActivatorModel(models.Model):
         if not self.activate_date:
             self.activate_date = now()
         super().save(*args, **kwargs)
+
+   
+class ClonableMixin(models.Model):
+    
+    def clone(self, save=False):
+        """
+        Create  copy of an object
+        @save param with allow to return a new object alread persisted to the db or not.
+        """
+        _obj = self
+        _obj.pk = None
+        if save:
+            _obj.save()
+        return _obj
